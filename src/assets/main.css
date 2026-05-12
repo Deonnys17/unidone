@@ -1,0 +1,40 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4ff;
+  color: #1a1a2e;
+  min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border: 1.5px solid currentColor;
+}
+
+.badge-dev {
+  color: #2563eb;
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
+
+.badge-prod {
+  color: #16a34a;
+  background: #dcfce7;
+  border-color: #86efac;
+}
