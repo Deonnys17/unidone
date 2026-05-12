@@ -18,6 +18,9 @@
     <main class="main">
       <div class="container">
         <StatsBar :tasks="tasks" />
+        <div v-if="showUrgentFilter" class="urgent-banner">
+          🔥 Фільтр термінових завдань увімкнено
+        </div>
         <TaskForm @add-task="addTask" />
         <TaskList
           :tasks="tasks"
@@ -43,6 +46,7 @@ import TaskForm from './components/TaskForm.vue'
 import TaskList from './components/TaskList.vue'
 import StatsBar from './components/StatsBar.vue'
 import { useTasks } from './composables/useTasks.js'
+import posthog from 'posthog-js'
 
 export default {
   name: 'App',
@@ -50,6 +54,16 @@ export default {
   setup() {
     const { tasks, addTask, removeTask, toggleDone } = useTasks()
     return { tasks, addTask, removeTask, toggleDone }
+  },
+  data() {
+    return {
+      showUrgentFilter: false
+    }
+  },
+  mounted() {
+    posthog.onFeatureFlags(() => {
+      this.showUrgentFilter = posthog.isFeatureEnabled('show-urgent-filter')
+    })
   },
   computed: {
     appStatus() {
@@ -108,6 +122,16 @@ export default {
   max-width: 720px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+.urgent-banner {
+  background: #fef3c7;
+  border: 1.5px solid #f59e0b;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  color: #92400e;
 }
 
 .footer {

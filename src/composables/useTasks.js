@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import posthog from 'posthog-js'
 
 const STORAGE_KEY = 'unidone-tasks'
 
@@ -25,11 +26,19 @@ export function useTasks() {
       createdAt: new Date().toISOString()
     })
     saveTasks()
+    posthog.capture('task_created', {
+      subject: task.subject,
+      type: task.type,
+      deadline: task.deadline
+    })
   }
 
   function removeTask(id) {
     tasks.value = tasks.value.filter(t => t.id !== id)
     saveTasks()
+    posthog.capture('task_deleted', {
+      task_id: String(id)
+    })
   }
 
   function toggleDone(id) {
@@ -37,6 +46,10 @@ export function useTasks() {
     if (task) {
       task.done = !task.done
       saveTasks()
+      posthog.capture('task_completed', {
+        task_id: String(id),
+        done: task.done
+      })
     }
   }
 

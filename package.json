@@ -16,6 +16,7 @@
     "test": "npm run test:unit && npm run test:e2e"
   },
   "dependencies": {
+    "posthog-js": "^1.373.4",
     "vue": "^3.4.21"
   },
   "devDependencies": {
