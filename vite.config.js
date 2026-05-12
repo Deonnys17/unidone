@@ -6,10 +6,11 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
+    exclude: ['**/node_modules/**', '**/tests/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
-      exclude: ['node_modules/', 'dist/', '*.config.js']
+      exclude: ['node_modules/', 'dist/', '*.config.js', 'tests/']
     }
   }
 })
